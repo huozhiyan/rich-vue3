@@ -8,7 +8,7 @@
 
 Rich-Vue3 是一个免费开源的致力于开发有趣且实用功能的解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术
 
-站在巨人的肩膀上！
+"站在巨人的肩膀上"
 
 基于不重复造轮子的理念，本项目基于 [v3-admin-vite](https://github.com/un-pany/v3-admin-vite) 进行开发。
 
@@ -74,10 +74,10 @@ git clone https://github.com/huozhiyan/rich-vue3.git
 cd rich-vue3
 
 # 安装依赖
-pnpm i
+npm i
 
 # 启动服务
-pnpm dev
+npm run dev
 ```
 
 ## ✔️ 预览
