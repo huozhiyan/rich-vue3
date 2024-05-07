@@ -35,6 +35,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       /** 接口代理 */
       proxy: {
         "/api/v1": {
+          /** 将 http://localhost:3333 代理到 target 配置的路径 */
           target: "https://mock.mengxuegu.com/mock/63218b5fb4c53348ed2bc212",
           ws: true,
           /** 是否允许跨域 */
