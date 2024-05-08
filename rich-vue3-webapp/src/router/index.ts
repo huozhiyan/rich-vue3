@@ -62,6 +62,22 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: "/handleVideo",
+    component: Layouts,
+    redirect: "/handleVideo/index",
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/handle-video/index.vue"),
+        name: "HandleVideo",
+        meta: {
+          title: "音视频处理",
+          elIcon: "film"
+        }
+      }
+    ]
+  },
+  {
     path: "/unocss",
     component: Layouts,
     redirect: "/unocss/index",
