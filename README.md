@@ -6,11 +6,17 @@
 
 ## ⚡ 简介
 
-Rich-Vue3 是一个免费开源的致力于开发有趣且实用功能的解决方案，基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术
+Rich-Vue3 是一个免费开源的致力于开发一些列有趣且实用功能的解决方案。
+
+前端基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等主流技术栈。
+
+服务端基于 Spring、SpringBoot、SpringCloud、Mybatis-Plus 等主流技术栈。
+
+采用 MySQL、MongoDB、Redis 等数据库，并使用 ORM 工具简化对数据库的操作。
 
 "站在巨人的肩膀上"
 
-基于不重复造轮子的理念，本项目基于 [v3-admin-vite](https://github.com/un-pany/v3-admin-vite) 进行开发。
+基于不重复造轮子的理念，本项目的前端基于 [v3-admin-vite](https://github.com/un-pany/v3-admin-vite) 进行开发。
 
 ## 📚 文档
 
