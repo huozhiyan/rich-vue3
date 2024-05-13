@@ -1,0 +1,11 @@
+server:
+  port: 8086 #eureka服务的地址
+spring:
+  application:
+    name: eureka-server #eureka服务的名称
+#这里是eureka集群的地址，用于多个eureka作为生产者和消费者进行通信
+#另外，可以将集群注册到当前的eureka中，也可以不在注册
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8086/eureka/
