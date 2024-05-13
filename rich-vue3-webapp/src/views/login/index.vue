@@ -23,7 +23,7 @@ const codeUrl = ref("")
 /** 登录表单数据 */
 const loginFormData: LoginRequestData = reactive({
   username: "admin",
-  password: "admin",
+  password: "12345678",
   code: ""
 })
 /** 登录表单校验规则 */
