@@ -21,6 +21,7 @@ const textFontSize = ref<number>(20)
 const textColor = ref<string>("orange")
 // 文本字体
 const fontType = ref<string>("px Arial")
+let isRecording = ref<boolean>(false)
 
 // recorder 实例
 const recorder = ref<any>(null)
@@ -83,6 +84,7 @@ const changeCanvasText = (text) => {
 
 // 开始录制
 const startRecording = () => {
+  isRecording.value = true
   allChunks = []
   const canvas = richCanvas.value
   const stream = canvas.captureStream(60) // 60 FPS
@@ -100,6 +102,7 @@ const startRecording = () => {
 
 // 停止录制并输出视频
 const stopRecording = () => {
+  isRecording.value = false
   if (!allChunks.length) {
     return
   }
@@ -137,7 +140,13 @@ onMounted(() => {
       @stop="stopRecording"
     />
     <div class="outer">
-      <canvas ref="richCanvas" class="canvas" />
+      <div
+        v-loading="isRecording"
+        element-loading-text="正在录制..."
+        element-loading-background="rgba(122, 122, 122, 0.4)"
+      >
+        <canvas ref="richCanvas" class="canvas" />
+      </div>
     </div>
   </div>
 </template>
