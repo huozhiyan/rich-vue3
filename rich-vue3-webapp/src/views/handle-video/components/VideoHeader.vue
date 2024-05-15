@@ -38,7 +38,7 @@ const speedOptions: SpeedOptions[] = reactive([
 ])
 
 // 配发事件
-const emit = defineEmits(["play", "pause", "changeSpeed", "changeText", "start", "stop"])
+const emit = defineEmits(["play", "pause", "changeSpeed", "changeText", "start", "stop", "generatePic"])
 
 // 播放动画
 const playAnimation = () => {
@@ -75,10 +75,16 @@ const stop = () => {
   pauseAnimation()
   emit("stop", false)
 }
+
+const generatePic = () => {
+  emit("generatePic")
+}
 </script>
 
 <template>
   <div class="video-btn">
+    <el-button>视频设置</el-button>
+    <el-divider direction="vertical" />
     <el-input
       class="text"
       placeholder="修改画布文本"
@@ -97,6 +103,8 @@ const stop = () => {
     <el-divider direction="vertical" />
     <el-button type="primary" @click="start" :disabled="isRecording">开始录制</el-button>
     <el-button type="danger" @click="stop" :disabled="!isRecording">结束录制</el-button>
+    <el-divider direction="vertical" />
+    <el-button @click="generatePic">生成图片</el-button>
   </div>
 </template>
 
