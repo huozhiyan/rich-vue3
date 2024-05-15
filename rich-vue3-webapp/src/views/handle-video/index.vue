@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { FFmpeg } from "@ffmpeg/ffmpeg"
 import VideoHeader from "@/views/handle-video/components/VideoHeader.vue"
 import { ref, reactive, onMounted } from "vue"
-
-const ffmpeg = new FFmpeg()
 
 // 获取 canvas
 const richCanvas = ref<HTMLCanvasElement>()
@@ -21,7 +18,7 @@ const textFontSize = ref<number>(20)
 const textColor = ref<string>("orange")
 // 文本字体
 const fontType = ref<string>("px Arial")
-let isRecording = ref<boolean>(false)
+const isRecording = ref<boolean>(false)
 
 // recorder 实例
 const recorder = ref<any>(null)
@@ -124,6 +121,21 @@ const stopRecording = () => {
   link.remove()
 }
 
+// 生成当前画布内容的图片
+const generateCanvasPic = () => {
+  const canvas = richCanvas.value
+  const dataURL = canvas?.toDataURL("image/png")
+  const a = document.createElement("a")
+  a.href = dataURL
+  a.download = `${canvasText.value}.png`
+
+  // 触发下载
+  document.body.appendChild(a)
+  a.click()
+  // 从DOM中移除
+  document.body.removeChild(a)
+}
+
 onMounted(() => {
   addTextOnCanvas()
 })
@@ -138,6 +150,7 @@ onMounted(() => {
       @pause="pauseAnimation"
       @start="startRecording"
       @stop="stopRecording"
+      @generatePic="generateCanvasPic"
     />
     <div class="outer">
       <div

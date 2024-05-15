@@ -71,7 +71,7 @@ export const constantRoutes: RouteRecordRaw[] = [
         component: () => import("@/views/handle-video/index.vue"),
         name: "HandleVideo",
         meta: {
-          title: "音视频处理",
+          title: "视频录制（画布）",
           elIcon: "film"
         }
       }
