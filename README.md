@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Rich-Vue3 Logo" width="320" height="120" src="../rich-vue3/rich-vue3-webapp/src/assets/layouts/logo-text-1.png">
+  <img alt="Rich-Vue3 Logo" width="320" height="120" src="./rich-vue3-webapp/src/assets/layouts/logo-text-1.png">
   <h1>Rich-Vue3</h1>
   <span><a href="./README.zh-CN.md">中文</a></span>
 </div>
@@ -42,7 +42,7 @@ rich-vue3 是一个免费开源的致力于提供一系列 **有趣且实用** �
 
 - **完全免费**：但欢迎且希望你点一个 star （这是我们持续维护的核心动力）！
 - **非常简洁**：没有复杂的封装，没有复杂的类型体操，开箱即用
-- **详细的注释**：各个功能都写有尽可能详细的注释，并且配备 [手膜手教程](https://blog.csdn.net/qq_45902692/category_12676615.html)
+- **详细的注释**：各个功能都写有尽可能详细的注释，并且配备 [手摸手教程](https://blog.csdn.net/qq_45902692/category_12676615.html)
 - **格式规整**: 规范代码风格、规范命名风格、规范注释风格，对标企业级要求
 
 ## 特性
@@ -125,8 +125,8 @@ npm run dev
 
 ## 项目预览图
 
-![video.png](../rich-vue3/rich-vue3-webapp/src/assets/docs/video.png)
-![preview1.png](../rich-vue3/rich-vue3-webapp/src/assets/docs/preview.png)
+![video.png](./rich-vue3-webapp/src/assets/docs/video.png)
+![preview1.png](./rich-vue3-webapp/src/assets/docs/preview.png)
 
 ## 💕 贡献者
 
@@ -144,14 +144,14 @@ npm run dev
 
 如果你觉得本项目对你提供了一些帮助，欢迎打赏一杯咖啡~~
 
-<img alt="Rich-Vue3 Logo" width="300" height="400" src="../rich-vue3/rich-vue3-webapp/src/assets/docs/donate.png">
-<img alt="Rich-Vue3 Logo" width="300" height="400" src="../rich-vue3/rich-vue3-webapp/src/assets/docs/donate2.png">
+<img alt="Rich-Vue3 Logo" width="300" height="400" src="./rich-vue3-webapp/src/assets/docs/donate.png">
+<img alt="Rich-Vue3 Logo" width="300" height="400" src="./rich-vue3-webapp/src/assets/docs/donate2.png">
 
 ## 提供答疑和行业交流的群
 
 QQ 群：642562939
 
-![qq.png](../rich-vue3/rich-vue3-webapp/src/assets/docs/qq.png)
+![qq.png](./rich-vue3-webapp/src/assets/docs/qq.png)
 
 ## 📄 License
 
