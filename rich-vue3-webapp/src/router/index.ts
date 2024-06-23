@@ -78,6 +78,22 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: "/city",
+    component: Layouts,
+    redirect: "/cityThree/index",
+    children: [
+      {
+        path: "index",
+        component: () => import("@/views/city-three/index.vue"),
+        name: "CityThree",
+        meta: {
+          title: "智慧城市",
+          elIcon: "OfficeBuilding"
+        }
+      }
+    ]
+  },
+  {
     path: "/unocss",
     component: Layouts,
     redirect: "/unocss/index",

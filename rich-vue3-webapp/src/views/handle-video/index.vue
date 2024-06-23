@@ -3,7 +3,7 @@ import VideoHeader from "@/views/handle-video/components/VideoHeader.vue"
 import { ref, reactive, onMounted } from "vue"
 
 // 获取 canvas
-const richCanvas = ref<HTMLCanvasElement>()
+const richCanvas = ref<HTMLCanvasElement>() as HTMLCanvasElement
 // 动画速度
 const animationSpeed = ref<number>(1)
 // 定时器
