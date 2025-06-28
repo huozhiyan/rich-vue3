@@ -1,0 +1,14 @@
+services:
+  db:
+    image: mysql # 使用官方 MySQL 镜像
+    restart: always # 容器崩溃时自动重启
+    environment: # 配置 MySQL 环境变量
+      MYSQL_ROOT_PASSWORD: example # MySQL root 用户的密码
+    ports:
+      - 3090: 3060 # 将主机的 3090 端口映射到容器的 3306 端口（MySQL 默认端口）
+
+  adminer:
+    image: adminer # 使用官方 Adminer 镜像
+    restart: always # 容器崩溃时自动重启
+    ports:
+      - 8090: 8080 # 将主机的 8090 端口映射到容器的 8080 端口（Adminer 默认端口）

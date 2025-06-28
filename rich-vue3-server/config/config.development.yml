@@ -1,0 +1,5 @@
+db:
+  mysql1:
+    name: mysql-dev
+  mysql2:
+    name: mysql-dev1
