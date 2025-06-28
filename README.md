@@ -1,27 +1,44 @@
 <div align="center">
-  <img alt="Rich-Vue3 Logo" width="320" height="120" src="./rich-vue3-webapp/src/assets/layouts/logo-text-1.png">
+  <img alt="Rich-Vue3 Logo" width="320" height="120" src="./rich-vue3-webapp/src/assets/layouts/logo-text-2.png">
   <h1>Rich-Vue3</h1>
   <span><a href="./README.zh-CN.md">中文</a></span>
 </div>
 
 ## ⚡ 简介
 
-rich-vue3 是一个免费开源的致力于提供一系列 **有趣且实用** 功能的解决方案。
+**rich-vue3** 是一个免费开源的致力于提供一系列 **有趣且实用** 功能的解决方案。
 
-前端基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等技术。
+前端技术栈：
 
-后端基于 Spring、Spring Boot、SpringCloud 等技术。
+- Vue3
+- TypeScript
+- Element Plus
+- TailWind CSS
+- UnoCSS
+- Pinia
+- Vite
+- Three.js
 
-数据库基于 MySQL、MongoDB、Redis 等。
+后端技术栈：
+
+- Node.js
+- Nest.js
+
+数据库：
+
+- MySQL
+- MongoDB
+- Redis
 
 "站在巨人的肩膀上"。
 
 基于不重复造轮子的理念，本项目前端基于 [v3-admin-vite](https://github.com/un-pany/v3-admin-vite) 进行开发"。
 
 ---
+
 **作者想说：**
 
-虽然主流的框架（如 Vue、React、Spring全家桶等）一定程度上简化了我们开发的难度，为我们提供了很多便利。
+虽然主流的框架（如 Vue、React、Nest.js 等）很大程度上简化了我们开发的难度，为我们提供了很多便利。
 
 但是我们在跟进前沿技术使用的同时，也要 **注重原生和基础**，毕竟万变不离其宗，原生才是真正的根基！
 
@@ -34,8 +51,8 @@ rich-vue3 是一个免费开源的致力于提供一系列 **有趣且实用** �
 
 ## 📺 在线预览
 
-| 位置         | 账号            | 链接                                            |
-| ------------ | --------------- | ----------------------------------------------- |
+| 位置         | 账号            | 链接                                 |
+| ------------ | --------------- | ------------------------------------ |
 | github-pages | admin 或 editor | [链接](https://huozhiyan.github.io/) |
 
 ## ❤️ 用爱发电
@@ -61,13 +78,15 @@ rich-vue3 是一个免费开源的致力于提供一系列 **有趣且实用** �
 - **Axios**：发送网络请求（已封装好）
 - **UnoCSS**：具有高性能且极具灵活性的即时原子化 CSS 引擎
 - **兼容移动端**: 布局兼容移动端页面分辨率
+
 ---
-- **Spring**: 控制反转IOC、依赖注入DI、面向切面编程AOP，简化 Java 应用程序的开发
-- **Spring Boot**: 简化 Spring 应用的初始搭建和开发过程。
-- **Spring Cloud**: 提供构建微服务架构和分布式系统。
+
+- **Nest.js**: 控制反转 IOC、依赖注入 DI、面向切面编程 AOP，简化服务端应用程序的开发
+
 ---
+
 - **MySQL**: 关系型数据库，支持各种数据类型，提供了高效的数据存储和检索机制。
-- **MongoDB**: 基于分布式文件存储的数据库，旨在为WEB应用提供可扩展的高性能数据存储解决方案。
+- **MongoDB**: 基于分布式文件存储的数据库，旨在为 WEB 应用提供可扩展的高性能数据存储解决方案。
 - **Redis**: 内存中的数据结构存储系统，用于数据库、缓存和消息中间件。
 
 ## 基础功能
@@ -82,8 +101,9 @@ rich-vue3 是一个免费开源的致力于提供一系列 **有趣且实用** �
 - **其他内置功能**：SVG、动态侧边栏、动态面包屑、标签页快捷导航、Screenfull 全屏、自适应收缩侧边栏、Hook（Composables）
 
 ## 扩展功能（持续更新中...）
-- **Canvas视频录制**：在 Canvas 画布上实现媒体流的录制和输出
-- **FFmpeg处理视频**：处理在 Canvas 画布中生成的视频流，进行分辨率、帧率和视频格式等的设置
+
+- **Canvas 视频录制**：在 Canvas 画布上实现媒体流的录制和输出
+- **FFmpeg 处理视频**：处理在 Canvas 画布中生成的视频流，进行分辨率、帧率和视频格式等的设置
 - 其余功能在规划开发中，敬请期待...
 
 ## 🚀 开发
@@ -105,7 +125,6 @@ npm i
 # 启动服务
 npm run dev
 ```
-
 
 ## Git 提交规范参考
 
