@@ -120,7 +120,7 @@ const generatePic = () => {
 .text {
   width: 215px;
 }
-::v-deep.el-divider--vertical {
+:deep(.el-divider--vertical) {
   height: 2rem !important;
   margin: 0 16px !important;
 }
