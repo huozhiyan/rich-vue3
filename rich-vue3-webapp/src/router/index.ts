@@ -62,37 +62,96 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: "/handleVideo",
+    path: "/vue",
+    // 该路由下的所有子页面都会显示在 Layouts 的 <router-view> 里
     component: Layouts,
-    redirect: "/handleVideo/index",
+    redirect: "/vue/basic",
+    name: "Vue",
+    meta: {
+      title: "Vue3",
+      elIcon: "Aim"
+    },
     children: [
       {
-        path: "index",
-        component: () => import("@/views/handle-video/index.vue"),
-        name: "HandleVideo",
+        path: "basic",
+        component: () => import("@/views/learn-vue/Basic.vue"),
+        name: "basic",
         meta: {
-          title: "视频录制（画布）",
-          elIcon: "film"
+          title: "基础"
+        }
+      },
+      {
+        path: "deep-into-component",
+        component: () => import("@/views/learn-vue/DeepIntoComponents.vue"),
+        name: "component",
+        meta: {
+          title: "深入组件"
         }
       }
     ]
   },
   {
-    path: "/city",
+    path: "/handleVideo",
     component: Layouts,
-    redirect: "/cityThree/index",
+    redirect: "/handleVideo/record-video",
+    name: "handleVideo",
+    meta: {
+      title: "视频处理",
+      elIcon: "film"
+    },
     children: [
       {
-        path: "index",
+        path: "record-video",
+        component: () => import("@/views/handle-video/RecordVideo.vue"),
+        name: "RecordVideo",
+        meta: {
+          title: "视频录制（画布）",
+          elIcon: "camera"
+        }
+      },
+      {
+        path: "format-conversion",
+        component: () => import("@/views/handle-video/VideoFormatConversion.vue"),
+        name: "FormatConversion",
+        meta: {
+          title: "视频格式转换",
+          elIcon: "switch"
+        }
+      }
+    ]
+  },
+  {
+    path: "/three",
+    component: Layouts,
+    redirect: "/three/city",
+    name: "three",
+    meta: {
+      title: "Three.js",
+      elIcon: "film"
+    },
+    children: [
+      {
+        path: "city",
         component: () => import("@/views/city-three/index.vue"),
         name: "CityThree",
         meta: {
           title: "智慧城市",
           elIcon: "OfficeBuilding"
         }
+      },
+      {
+        path: "basic",
+        component: () => import("@/views/city-three/index.vue"),
+        name: "Basic",
+        meta: {
+          title: "基础",
+          elIcon: "switch"
+        }
       }
     ]
   },
+  // 性能比较
+  // 算法
   {
     path: "/unocss",
     component: Layouts,
