@@ -1,27 +1,46 @@
 <div align="center">
-  <img alt="Rich-Vue3 Logo" width="320" height="120" src="../rich-vue3/rich-vue3-webapp/src/assets/layouts/logo-text-1.png">
+  <img alt="Rich-Vue3 Logo" width="320" height="120" src="./rich-vue3-webapp/src/assets/layouts/logo-text-2.png">
   <h1>Rich-Vue3</h1>
   <span><a href="./README.zh-CN.md">中文</a></span>
 </div>
 
 ## ⚡ 简介
 
-rich-vue3 是一个免费开源的致力于提供一系列 **有趣且实用** 功能的解决方案。
+**rich-vue3** 是一个免费开源的致力于提供一系列 **有趣且实用** 功能的解决方案。
 
-前端基于 Vue3、TypeScript、Element Plus、Pinia 和 Vite 等技术。
+这里，是我们提升技术的 **实验田** ，基于主流的渐进式框架 Vue3，让我们的技术能力和业务能力都更上一层楼。
 
-后端基于 Spring、Spring Boot、SpringCloud 等技术。
+前端技术栈：
 
-数据库基于 MySQL、MongoDB、Redis 等。
+- Vue3
+- TypeScript
+- Element Plus
+- TailWind CSS
+- UnoCSS
+- Pinia
+- Vite
+- Three.js
+
+后端技术栈（后续扩展）：
+
+- Node.js
+- Nest.js
+
+数据库（后续扩展）：
+
+- MySQL
+- MongoDB
+- Redis
 
 "站在巨人的肩膀上"。
 
 基于不重复造轮子的理念，本项目前端基于 [v3-admin-vite](https://github.com/un-pany/v3-admin-vite) 进行开发"。
 
 ---
+
 **作者想说：**
 
-虽然主流的框架（如 Vue、React、Spring全家桶等）一定程度上简化了我们开发的难度，为我们提供了很多便利。
+虽然主流的框架（如 Vue、React、Nest.js 等）很大程度上简化了我们开发的难度，为我们提供了很多便利。
 
 但是我们在跟进前沿技术使用的同时，也要 **注重原生和基础**，毕竟万变不离其宗，原生才是真正的根基！
 
@@ -29,20 +48,20 @@ rich-vue3 是一个免费开源的致力于提供一系列 **有趣且实用** �
 
 ## 📚 文档
 
-- 中文文档：[链接](https://zahuopu.blog.csdn.net//category_12676615.html)
-- 手摸手教程：[链接](https://blog.csdn.net/qq_45902692/category_12676615.html)
+- 中文文档：[链接](https://zahuopu.blog.csdn.net/)
+- 手摸手教程：[链接](https://zahuopu.blog.csdn.net/)
 
 ## 📺 在线预览
 
-| 位置         | 账号            | 链接                                            |
-| ------------ | --------------- | ----------------------------------------------- |
+| 位置         | 账号            | 链接                                 |
+| ------------ | --------------- | ------------------------------------ |
 | github-pages | admin 或 editor | [链接](https://huozhiyan.github.io/) |
 
 ## ❤️ 用爱发电
 
 - **完全免费**：但欢迎且希望你点一个 star （这是我们持续维护的核心动力）！
 - **非常简洁**：没有复杂的封装，没有复杂的类型体操，开箱即用
-- **详细的注释**：各个功能都写有尽可能详细的注释，并且配备 [手膜手教程](https://blog.csdn.net/qq_45902692/category_12676615.html)
+- **详细的注释**：各个功能都写有尽可能详细的注释，并且配备 [手摸手教程](https://zahuopu.blog.csdn.net/)
 - **格式规整**: 规范代码风格、规范命名风格、规范注释风格，对标企业级要求
 
 ## 特性
@@ -61,13 +80,15 @@ rich-vue3 是一个免费开源的致力于提供一系列 **有趣且实用** �
 - **Axios**：发送网络请求（已封装好）
 - **UnoCSS**：具有高性能且极具灵活性的即时原子化 CSS 引擎
 - **兼容移动端**: 布局兼容移动端页面分辨率
+
 ---
-- **Spring**: 控制反转IOC、依赖注入DI、面向切面编程AOP，简化 Java 应用程序的开发
-- **Spring Boot**: 简化 Spring 应用的初始搭建和开发过程。
-- **Spring Cloud**: 提供构建微服务架构和分布式系统。
+
+- **Nest.js**: 控制反转 IOC、依赖注入 DI、面向切面编程 AOP，简化服务端应用程序的开发
+
 ---
+
 - **MySQL**: 关系型数据库，支持各种数据类型，提供了高效的数据存储和检索机制。
-- **MongoDB**: 基于分布式文件存储的数据库，旨在为WEB应用提供可扩展的高性能数据存储解决方案。
+- **MongoDB**: 基于分布式文件存储的数据库，旨在为 WEB 应用提供可扩展的高性能数据存储解决方案。
 - **Redis**: 内存中的数据结构存储系统，用于数据库、缓存和消息中间件。
 
 ## 基础功能
@@ -82,8 +103,12 @@ rich-vue3 是一个免费开源的致力于提供一系列 **有趣且实用** �
 - **其他内置功能**：SVG、动态侧边栏、动态面包屑、标签页快捷导航、Screenfull 全屏、自适应收缩侧边栏、Hook（Composables）
 
 ## 扩展功能（持续更新中...）
-- **Canvas视频录制**：在 Canvas 画布上实现媒体流的录制和输出
-- **FFmpeg处理视频**：处理在 Canvas 画布中生成的视频流，进行分辨率、帧率和视频格式等的设置
+
+- **Vue3 篇**：通读 Vue3 官方文档，练习每个章节的详细内容。
+- **Three.js 篇**：通读 Three.js 官方文档 & 权威指南，练习每个章节的详细内容。
+- **算法篇**：刷 LeetCode，保持题感。
+- **视频处理篇**：在 Canvas 画布上实现媒体流的录制和输出；处理在 Canvas 画布中生成的视频流，进行分辨率、帧率和视频格式等的设置。
+- **小知识篇**：目标 100 个小知识，掌握常见但又不熟悉的技术/业务。
 - 其余功能在规划开发中，敬请期待...
 
 ## 🚀 开发
@@ -106,7 +131,6 @@ npm i
 npm run dev
 ```
 
-
 ## Git 提交规范参考
 
 - `feat` 增加新的业务功能
@@ -125,8 +149,8 @@ npm run dev
 
 ## 项目预览图
 
-![video.png](../rich-vue3/rich-vue3-webapp/src/assets/docs/video.png)
-![preview1.png](../rich-vue3/rich-vue3-webapp/src/assets/docs/preview.png)
+![video.png](./rich-vue3-webapp/src/assets/docs/video.png)
+![preview1.png](./rich-vue3-webapp/src/assets/docs/preview.png)
 
 ## 💕 贡献者
 
@@ -144,14 +168,14 @@ npm run dev
 
 如果你觉得本项目对你提供了一些帮助，欢迎打赏一杯咖啡~~
 
-<img alt="Rich-Vue3 Logo" width="300" height="400" src="../rich-vue3/rich-vue3-webapp/src/assets/docs/donate.png">
-<img alt="Rich-Vue3 Logo" width="300" height="400" src="../rich-vue3/rich-vue3-webapp/src/assets/docs/donate2.png">
+<img alt="Rich-Vue3 Logo" width="300" height="400" src="./rich-vue3-webapp/src/assets/docs/donate.png">
+<img alt="Rich-Vue3 Logo" width="300" height="400" src="./rich-vue3-webapp/src/assets/docs/donate2.png">
 
 ## 提供答疑和行业交流的群
 
 QQ 群：642562939
 
-![qq.png](../rich-vue3/rich-vue3-webapp/src/assets/docs/qq.png)
+![qq.png](./rich-vue3-webapp/src/assets/docs/qq.png)
 
 ## 📄 License
 
