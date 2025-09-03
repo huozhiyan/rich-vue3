@@ -91,6 +91,36 @@ export const constantRoutes: RouteRecordRaw[] = [
     ]
   },
   {
+    path: "/three",
+    component: Layouts,
+    redirect: "/three/city",
+    name: "three",
+    meta: {
+      title: "Three.js",
+      elIcon: "orange"
+    },
+    children: [
+      {
+        path: "city",
+        component: () => import("@/views/city-three/index.vue"),
+        name: "CityThree",
+        meta: {
+          title: "智慧城市",
+          elIcon: "OfficeBuilding"
+        }
+      },
+      {
+        path: "basic",
+        component: () => import("@/views/city-three/index.vue"),
+        name: "Basic",
+        meta: {
+          title: "基础",
+          elIcon: "switch"
+        }
+      }
+    ]
+  },
+  {
     path: "/handleVideo",
     component: Layouts,
     redirect: "/handleVideo/record-video",
@@ -120,38 +150,99 @@ export const constantRoutes: RouteRecordRaw[] = [
       }
     ]
   },
+  // 100个小知识
   {
-    path: "/three",
+    path: "/small-knowledge",
     component: Layouts,
-    redirect: "/three/city",
-    name: "three",
+    redirect: "/small-knowledge/knowledge",
+    name: "small-knowledge",
     meta: {
-      title: "Three.js",
-      elIcon: "film"
+      title: "100个小知识",
+      elIcon: "chicken"
     },
     children: [
       {
-        path: "city",
-        component: () => import("@/views/city-three/index.vue"),
-        name: "CityThree",
+        path: "knowledge1",
+        component: () => import("@/views/small-knowledge/Item1.vue"),
+        name: "knowledge1",
         meta: {
-          title: "智慧城市",
-          elIcon: "OfficeBuilding"
+          title: "小知识1",
+          elIcon: "chicken"
         }
       },
       {
-        path: "basic",
-        component: () => import("@/views/city-three/index.vue"),
-        name: "Basic",
+        path: "knowledge2",
+        component: () => import("@/views/small-knowledge/Item2.vue"),
+        name: "knowledge2",
         meta: {
-          title: "基础",
-          elIcon: "switch"
+          title: "小知识2",
+          elIcon: "chicken"
         }
       }
     ]
   },
-  // 性能比较
   // 算法
+  {
+    path: "/algorithm",
+    component: Layouts,
+    redirect: "/algorithm/item1",
+    name: "algorithm",
+    meta: {
+      title: "LeetCode算法",
+      elIcon: "sugar"
+    },
+    children: [
+      {
+        path: "item1",
+        component: () => import("@/views/algorithm/Item1.vue"),
+        name: "item1",
+        meta: {
+          title: "算法1",
+          elIcon: "sugar"
+        }
+      },
+      {
+        path: "item2",
+        component: () => import("@/views/algorithm/Item2.vue"),
+        name: "item2",
+        meta: {
+          title: "算法2",
+          elIcon: "sugar"
+        }
+      }
+    ]
+  },
+  // 设计模式
+  {
+    path: "/desgin-pattern",
+    component: Layouts,
+    redirect: "/desgin-pattern/part1",
+    name: "desgin-pattern",
+    meta: {
+      title: "设计模式",
+      elIcon: "lollipop"
+    },
+    children: [
+      {
+        path: "part1",
+        component: () => import("@/views/desgin-pattern/Item1.vue"),
+        name: "part1",
+        meta: {
+          title: "设计模式1",
+          elIcon: "lollipop"
+        }
+      },
+      {
+        path: "part2",
+        component: () => import("@/views/desgin-pattern/Item2.vue"),
+        name: "part2",
+        meta: {
+          title: "设计模式2",
+          elIcon: "lollipop"
+        }
+      }
+    ]
+  },
   {
     path: "/unocss",
     component: Layouts,
