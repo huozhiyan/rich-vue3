@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, nextTick } from "vue"
+import { ref, reactive, nextTick, computed } from "vue"
 
 const rawHtml = `<span style="color: red; font-weight: bold;">This is raw HTML content!</span>`
 const picPath = "../../../public/favicon.ico"
@@ -31,10 +31,43 @@ function mutateDeeply() {
 const state = reactive({ count: 0 })
 const raw = {}
 const proxy = reactive(raw)
+
+const author = reactive({
+  name: "John Doe",
+  books: ["Vue 2 - Advanced Guide", "Vue 3 - Basic Guide", "Vue 4 - The Mystery"]
+})
+
+// 一个计算属性 ref
+const publishedBooksMessage = computed(() => {
+  return author.books.length > 0 ? "Yes" : "No"
+})
+
+const firstName = ref("前端")
+const lastName = ref("杂货铺")
+const fullName = computed({
+  get() {
+    return firstName.value + " " + lastName.value
+  },
+  set(newValue) {
+    ;[firstName.value, lastName.value] = newValue.split(" ")
+  }
+})
+
+function changeName() {
+  fullName.value = "Front-end grocery-store"
+}
+
+const countNum = ref(0)
+const previousNum = ref(0)
+const alwaysSmall = computed((previous) => {
+  previousNum.value = previous === undefined ? "undefined" : previous
+  return countNum.value
+})
 </script>
 
 <template>
   <div class="w-full max-h-[calc(100vh-64px)] overflow-auto flex flex-col gap-4 p-4 bg-gray-50 pb-16">
+    <!-- 模板语法 -->
     <section class="mx-auto w-full">
       <div class="bg-white rounded-lg shadow p-4">
         <div class="font-semibold text-xl mb-1">模板语法</div>
@@ -80,6 +113,7 @@ const proxy = reactive(raw)
       </div>
     </section>
 
+    <!-- 响应式基础 -->
     <section class="mx-auto w-full">
       <div class="bg-white rounded-lg shadow p-4">
         <div class="font-semibold text-xl mb-1">响应式基础</div>
@@ -137,6 +171,58 @@ const proxy = reactive(raw)
           对解构操作不友好：当我们将响应式对象的原始类型属性解构为本地变量时，或者将该属性传递给函数时，我们将丢失响应性连接.
         </li>
         <p class="text-red-500 font-bold">由于这些限制，我们建议使用 ref() 作为声明响应式状态的主要 API。</p>
+      </div>
+    </section>
+
+    <!-- 计算属性 -->
+    <section class="mx-auto w-full">
+      <div class="bg-white rounded-lg shadow p-4">
+        <div class="font-semibold text-xl mb-1">计算属性</div>
+        <p>使用计算属性来描述依赖响应式状态的复杂逻辑。</p>
+        <p>
+          Vue 的计算属性会自动追踪响应式依赖。它会检测到 publishedBooksMessage 依赖于 author.books，所以当 author.books
+          改变时，任何依赖于 publishedBooksMessage 的绑定都会同时更新。
+        </p>
+        <p>
+          Has published books: <span>{{ publishedBooksMessage }}</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- 计算属性缓存 VS 方法 -->
+    <section class="mx-auto w-full">
+      <div class="bg-white rounded-lg shadow p-4">
+        <div class="font-semibold text-xl mb-1">计算属性缓存 VS 方法</div>
+        <p>
+          若我们将同样的函数定义为一个方法而不是计算属性，两种方式在结果上确实是完全相同的，然而，<span
+            class="text-red-500 font-bold"
+            >不同之处在于计算属性值会基于其响应式依赖被缓存。</span
+          >
+        </p>
+        <p>
+          一个计算属性仅会在其响应式依赖更新时才重新计算。这意味着只要 author.books 不改变，无论多少次访问
+          publishedBooksMessage 都会立即返回先前的计算结果，而不用重复执行 getter 函数。
+        </p>
+        <p>相比之下，方法调用总是会在重渲染发生时再次执行函数。（造成不必要的资源浪费）</p>
+      </div>
+    </section>
+
+    <!-- 可写的计算属性 -->
+    <section class="mx-auto w-full">
+      <div class="bg-white rounded-lg shadow p-4">
+        <div class="font-semibold text-xl mb-1">可写的计算属性</div>
+        <p>计算属性默认是只读的。当我们需要用到可写属性时，可以使用提供的 getter 和 setter 来创建。</p>
+        <p>fullName: {{ fullName }}</p>
+        <button class="bg-purple-100 border cursor-pointer" @click="changeName">changeName</button>
+      </div>
+    </section>
+
+    <!-- 获取上一个值 -->
+    <section class="mx-auto w-full">
+      <div class="bg-white rounded-lg shadow p-4">
+        <div class="font-semibold text-xl mb-1">获取上一个值</div>
+        <p>countNum：{{ alwaysSmall }} | previousNum: {{ previousNum }}</p>
+        <button class="bg-red-100 border cursor-pointer" @click="countNum++">countNum++</button>
       </div>
     </section>
   </div>
