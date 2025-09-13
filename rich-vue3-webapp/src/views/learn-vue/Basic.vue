@@ -63,10 +63,28 @@ const alwaysSmall = computed((previous) => {
   previousNum.value = previous === undefined ? "undefined" : previous
   return countNum.value
 })
+
+const classObject = {
+  "text-green-500": true,
+  "text-sm": true
+}
+
+const classObject2 = computed(() => ({
+  "text-orange-500": true,
+  "text-sm": true
+}))
+
+const activeColor = ref("red")
+const fontSize = ref(25)
+
+const styleObject = reactive({
+  color: "red",
+  fontSize: "20px"
+})
 </script>
 
 <template>
-  <div class="w-full max-h-[calc(100vh-64px)] overflow-auto flex flex-col gap-4 p-4 bg-gray-50 pb-16">
+  <div id="test" class="w-full max-h-[calc(100vh-64px)] overflow-auto flex flex-col gap-4 p-4 bg-gray-50 pb-16">
     <!-- 模板语法 -->
     <section class="mx-auto w-full">
       <div class="bg-white rounded-lg shadow p-4">
@@ -92,7 +110,7 @@ const alwaysSmall = computed((previous) => {
         <p v-if="seen">Now you can see. (这里，v-if 指令会基于表达式 seen 的值的真假来移除/插入该 p 元素。)</p>
 
         <!-- 动态参数 -->
-        <div class="font-semibold text-base mb-1 mt-4">3、动态参数</div>
+        <div class="font-semibold text-base mb-1 mt-4">4、动态参数</div>
         <p>在指令参数上也可以使用一个 JavaScript 表达式，需要包含在一对方括号内。</p>
         <p class="text-red-500">
           动态参数表达式因为某些字符的缘故有一些语法限制，比如空格和引号，在 HTML attribute 名称中都是不合法的。
@@ -104,7 +122,7 @@ const alwaysSmall = computed((previous) => {
         <img :[attributeName]="picPath" class="w-16 h-16" alt="" />
 
         <!-- 修饰符 Modifiers -->
-        <div class="font-semibold text-base mb-1 mt-4">3、指令 Directives</div>
+        <div class="font-semibold text-base mb-1 mt-4">5、指令 Directives</div>
         <p>修饰符是以点开头的特殊后缀，表明指令需要以一些特殊的方式被绑定。如.prevent阻止默认行为。</p>
         <div @click="handleClick">
           <!-- 阻止事件冒泡，只执行一次handleClick -->
@@ -149,7 +167,7 @@ const alwaysSmall = computed((previous) => {
         <button class="border bg-red-100 cursor-pointer" @click="state.count++">点我+1：{{ state.count }}</button>
 
         <!-- Reactive Proxy vs Original -->
-        <div class="font-semibold text-base mb-1 mt-4">4、Reactive Proxy vs Original</div>
+        <div class="font-semibold text-base mb-1 mt-4">5、Reactive Proxy vs Original</div>
         <p>reactive() 返回的是一个原始对象的 Proxy，它和原始对象是不相等的。</p>
         <p>
           只有代理对象是响应式的，更改原始对象不会触发更新。因此，使用 Vue
@@ -160,7 +178,7 @@ const alwaysSmall = computed((previous) => {
         <p>proxy === raw: {{ reactive(proxy) === proxy }}（在一个代理上调用 reactive() 会返回它自己）</p>
 
         <!-- reactive() 的局限性 -->
-        <div class="font-semibold text-base mb-1 mt-4">4、reactive() 的局限性</div>
+        <div class="font-semibold text-base mb-1 mt-4">6、reactive() 的局限性</div>
         <p>reactive() API 有一些局限性。</p>
         <li>有限的值类型：只能用于对象类型（对象、数组、Map、Set）</li>
         <li>
@@ -177,7 +195,7 @@ const alwaysSmall = computed((previous) => {
     <!-- 计算属性 -->
     <section class="mx-auto w-full">
       <div class="bg-white rounded-lg shadow p-4">
-        <div class="font-semibold text-xl mb-1">计算属性</div>
+        <div class="font-semibold text-xl mb-1">1、计算属性</div>
         <p>使用计算属性来描述依赖响应式状态的复杂逻辑。</p>
         <p>
           Vue 的计算属性会自动追踪响应式依赖。它会检测到 publishedBooksMessage 依赖于 author.books，所以当 author.books
@@ -186,13 +204,9 @@ const alwaysSmall = computed((previous) => {
         <p>
           Has published books: <span>{{ publishedBooksMessage }}</span>
         </p>
-      </div>
-    </section>
 
-    <!-- 计算属性缓存 VS 方法 -->
-    <section class="mx-auto w-full">
-      <div class="bg-white rounded-lg shadow p-4">
-        <div class="font-semibold text-xl mb-1">计算属性缓存 VS 方法</div>
+        <!-- 计算属性缓存 VS 方法 -->
+        <div class="font-semibold text-base mb-1">1、计算属性缓存 VS 方法</div>
         <p>
           若我们将同样的函数定义为一个方法而不是计算属性，两种方式在结果上确实是完全相同的，然而，<span
             class="text-red-500 font-bold"
@@ -204,25 +218,58 @@ const alwaysSmall = computed((previous) => {
           publishedBooksMessage 都会立即返回先前的计算结果，而不用重复执行 getter 函数。
         </p>
         <p>相比之下，方法调用总是会在重渲染发生时再次执行函数。（造成不必要的资源浪费）</p>
-      </div>
-    </section>
 
-    <!-- 可写的计算属性 -->
-    <section class="mx-auto w-full">
-      <div class="bg-white rounded-lg shadow p-4">
-        <div class="font-semibold text-xl mb-1">可写的计算属性</div>
+        <!-- 可写的计算属性 -->
+        <div class="font-semibold text-base mb-1">2、可写的计算属性</div>
         <p>计算属性默认是只读的。当我们需要用到可写属性时，可以使用提供的 getter 和 setter 来创建。</p>
         <p>fullName: {{ fullName }}</p>
-        <button class="bg-purple-100 border cursor-pointer" @click="changeName">changeName</button>
+        <button class="bg-purple-100 border cursor-pointer mb-2" @click="changeName">changeName</button>
+
+        <!-- 获取上一个值 -->
+        <div class="font-semibold text-base mb-1">3、获取上一个值</div>
+        <p>countNum：{{ alwaysSmall }} | previousNum: {{ previousNum }}</p>
+        <button class="bg-red-100 border cursor-pointer" @click="countNum++">countNum++</button>
       </div>
     </section>
 
-    <!-- 获取上一个值 -->
+    <!-- Class 与 Style 绑定 -->
     <section class="mx-auto w-full">
       <div class="bg-white rounded-lg shadow p-4">
-        <div class="font-semibold text-xl mb-1">获取上一个值</div>
-        <p>countNum：{{ alwaysSmall }} | previousNum: {{ previousNum }}</p>
-        <button class="bg-red-100 border cursor-pointer" @click="countNum++">countNum++</button>
+        <div class="font-semibold text-xl mb-1">Class 与 Style 绑定</div>
+        <p>数据绑定的一个常见需求场景时操作元素的 CSS class列表和内联样式。</p>
+
+        <!-- 绑定对象 -->
+        <div class="font-semibold text-base mb-1">1、绑定对象</div>
+        <div :class="{ 'text-blue-500': true, 'text-sm': true }">内联字面量形式-在对象中写多个字段来操作多个css</div>
+        <div :class="classObject">直接绑定一个对象</div>
+        <div :class="classObject2">绑定一个返回对象的计算属性</div>
+
+        <!-- 绑定数组 -->
+        <div class="font-semibold text-base mb-1">2、绑定数组</div>
+        <div :class="['text-red-500', 'text-lg', 'font-bold']">
+          绑定一个数组（我们可以给 :class 绑定一个数组来渲染 CSS Class）
+        </div>
+        <div :class="[true ? 'text-green-500' : 'text-red-500', 'text-base']">使用三元表达式，有条件的渲染某class</div>
+
+        <!-- 绑定内联样式-绑定对象 -->
+        <div class="font-semibold text-base mb-1">3、绑定内联样式-绑定对象</div>
+        <div :style="{ color: activeColor, fontSize: fontSize + 'px' }">
+          :style 绑定 JS 对象值，对应的是 HTML 元素的 style 属性
+        </div>
+        <div :style="styleObject">直接绑定一个样式对象，使模板更加简洁。</div>
+
+        <!-- 绑定内联样式-绑定数组 -->
+        <div class="font-semibold text-base mb-1">4、绑定内联样式-绑定数组</div>
+        <div :style="[{ color: 'blue' }, { fontSize: '24px' }]">
+          :style 绑定一个包含多个样式对象的数组。这些对象会被合并后渲染到同一元素上。
+        </div>
+
+        <!-- 绑定内联样式-样式多值 -->
+        <div class="font-semibold text-base mb-1">5、绑定内联样式-样式多值</div>
+        <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'], justifyContent: ['-webkit-center', 'center'] }">
+          <p>对一个样式属性提供多个不同前缀的值，</p>
+          <p>数组仅会渲染浏览器支持的最后一个值。</p>
+        </div>
       </div>
     </section>
   </div>
