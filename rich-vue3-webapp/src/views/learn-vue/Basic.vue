@@ -83,6 +83,22 @@ const styleObject = reactive({
 })
 
 const awesome = ref(true)
+
+function onSubmit() {
+  window.alert("提交")
+}
+
+function doThat() {
+  window.alert("只有点击最外层的div，才会触发事件")
+}
+
+function outer() {
+  window.alert("outer")
+}
+
+function inner() {
+  window.alert("inner")
+}
 </script>
 
 <template>
@@ -307,6 +323,92 @@ const awesome = ref(true)
           v-if 的优先级比 v-for 高。这意味着如果两者出现在同一个元素上，v-if 会先于 v-for 被处理。不推荐同时使用 v-if 和
           v-for。
         </p>
+      </div>
+    </section>
+
+    <!-- 事件处理 -->
+    <section class="mx-auto w-full">
+      <div class="bg-white rounded-lg shadow p-4">
+        <div class="font-semibold text-xl mb-1">事件处理</div>
+
+        <!-- 事件修饰符 -->
+        <div class="font-semibold text-base mb-1">1、事件修饰符</div>
+        <p>修饰符是用 . 表示的指令后缀；包含：.stop、.prevent、.self、.capture、.once、.passive。</p>
+
+        <!-- stop -->
+        <div @click="handleClick">
+          <p>.stop 将阻止事件冒泡。相当于在原生的 JavaScript 中调用 event.stopPropagation()。</p>
+          <p>点击按钮时，不会出发父级 div 的 click 事件。</p>
+          <button @click.stop="handleClick">click me（.stop）</button>
+        </div>
+
+        <!-- prevent -->
+        <p>.prevent 阻止事件的默认行为。相当于在原生的 JavaScript 中调用 event.preventDefault()。</p>
+        <p>提交表单时，不会触发页面的刷新。</p>
+        <form @submit.prevent="onSubmit">
+          <button type="submit">submit（.prevent）</button>
+        </form>
+
+        <!-- self -->
+        <p>.self 只有当事件是从事件绑定的元素本身触发时（即事件源是当前元素本身），才会调用事件处理函数。</p>
+        <div @click.self="doThat" class="border p-2 cursor-pointer">
+          点击这里会触发事件（.self）
+          <p class="border cursor-pointer">点击这里不会触发事件（.self）</p>
+        </div>
+
+        <!-- capture -->
+        <p>.capture 事件监听器会在事件捕获阶段触发，而不是冒泡阶段。</p>
+        <p>
+          默认的事件流是：捕获阶段 -> 目标阶段 -> 冒泡阶段。默认情况下，事件处理是在冒泡阶段触发的。添加 .capture
+          后，事件处理会在捕获阶段（由外向内）触发。
+        </p>
+        <div @click.capture="outer" class="border cursor-pointer">
+          outer
+          <button @click="inner">inner</button>
+        </div>
+
+        <!-- .once -->
+        <p>.once 事件只会触发一次。触发后，事件监听器会被自动移除。</p>
+        <button @click.once="outer">只能点一次</button>
+
+        <!-- .passive -->
+        <p>
+          .passive
+          告诉浏览器你不打算阻止事件的默认行为（event.preventDefault()），从而让浏览器可以立即执行默认行为，无需等待事件处理函数执行完毕。这能显著提升移动端设备的滚动性能。
+        </p>
+        <div @scroll.passive="console.log('scrolling')" class="border h-20 overflow-auto bg-gray-200 rounded-lg">
+          <div class="h-64">滚动这里试试（.passive）</div>
+          <p>请查看控制台...</p>
+        </div>
+
+        <!-- 按键修饰符 -->
+        <div class="font-semibold text-base mb-1 mt-2">2、按键修饰符</div>
+        <p>在监听键盘事件时，我们经常需要检查特定的按键。Vue 允许在 v-on 或 @ 监听按键事件时添加按键修饰符。</p>
+        <p>Vue 为一些常用的按键提供了别名：</p>
+        <li>.enter</li>
+        <li>.tab</li>
+        <li>.delete(捕获“Delete”和“Backspace”两个按键)</li>
+        <li>.esc</li>
+        <li>.space</li>
+        <li>.up</li>
+        <li>.down</li>
+        <li>.left</li>
+        <li>.right</li>
+
+        <!-- 系统按键修饰符 -->
+        <div class="font-semibold text-base mb-1 mt-2">3、系统按键修饰符</div>
+        <p>可以使用以下系统按键修饰符来触发鼠标或键盘事件监听器，只有当按键被按下时才会触发。</p>
+        <li>.ctrl</li>
+        <li>.alt</li>
+        <li>.shift</li>
+        <li>.meta (Mac上的Command键，Windows上的Windows键)</li>
+        <input class="border p-2 mt-2" @keyup.enter="inner" placeholder="按下Enter触发" />
+
+        <!-- .exact修饰符 -->
+        <p>.exact 修饰符允许精确控制触发事件所需的系统修饰符的组合。</p>
+        <p>当按下 Shift 时，即使同时按下 Alt 或 Shift 也会触发 <button @click.shift="inner">A</button></p>
+        <p>仅当按下 Shift 且未按任何其他键时才会触发 <button @click.shift.exact="inner">A</button></p>
+        <p>仅当没有按下任何系统按键时触发 <button @click.exact="inner">A</button></p>
       </div>
     </section>
   </div>
