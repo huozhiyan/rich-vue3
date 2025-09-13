@@ -81,6 +81,8 @@ const styleObject = reactive({
   color: "red",
   fontSize: "20px"
 })
+
+const awesome = ref(true)
 </script>
 
 <template>
@@ -270,6 +272,41 @@ const styleObject = reactive({
           <p>对一个样式属性提供多个不同前缀的值，</p>
           <p>数组仅会渲染浏览器支持的最后一个值。</p>
         </div>
+      </div>
+    </section>
+
+    <!-- 条件渲染 -->
+    <section class="mx-auto w-full">
+      <div class="bg-white rounded-lg shadow p-4">
+        <div class="font-semibold text-xl mb-1">条件渲染</div>
+
+        <!-- v-if -->
+        <div class="font-semibold text-base mb-1">1、v-if、v-else</div>
+        <p>一个 v-else 元素必须跟在一个 v-if 或者 v-else-if 元素后面，否则它将不会被识别。</p>
+        <button class="bg-red-100 border cursor-pointer mb-2" @click="awesome = !awesome">Toggle</button>
+        <h4 v-if="awesome">Vue is awesome!</h4>
+        <h4 v-else>Oh no 😢</h4>
+
+        <!-- v-show -->
+        <div class="font-semibold text-base mb-1">2、v-show</div>
+        <p>v-show 不支持在 template 元素上使用，也不能和 v-else 搭配使用。</p>
+        <h3 v-show="true">
+          Hello！v-show 会在 DOM 渲染中保留该元素；v-show 仅切换了该元素上名为 display 的 CSS 属性。
+        </h3>
+
+        <!-- v-if vs v-show -->
+        <div class="font-semibold text-base mb-1">3、v-if vs v-show</div>
+        <p>
+          v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要频繁切换，则使用 v-show
+          较好；如果在运行时绑定条件很少改变，则 v-if 会更合适。
+        </p>
+
+        <!-- v-if 和 v-for -->
+        <div class="font-semibold text-base mb-1">4、v-if 和 v-for</div>
+        <p>
+          v-if 的优先级比 v-for 高。这意味着如果两者出现在同一个元素上，v-if 会先于 v-for 被处理。不推荐同时使用 v-if 和
+          v-for。
+        </p>
       </div>
     </section>
   </div>
