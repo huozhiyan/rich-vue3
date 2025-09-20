@@ -99,6 +99,24 @@ function outer() {
 function inner() {
   window.alert("inner")
 }
+
+let text = ref("")
+let text2 = ref("")
+let message = ref("")
+let message2 = ref("")
+let checked = ref(false)
+let picked = ref("")
+let checkNames = ref([])
+let selected = ref("")
+const selected2 = ref("A")
+const options = ref([
+  { text: "One", value: "A" },
+  { text: "Two", value: "B" },
+  { text: "Three", value: "C" }
+])
+const msg = ref("")
+const age = ref("")
+const msg2 = ref("")
 </script>
 
 <template>
@@ -409,6 +427,89 @@ function inner() {
         <p>当按下 Shift 时，即使同时按下 Alt 或 Shift 也会触发 <button @click.shift="inner">A</button></p>
         <p>仅当按下 Shift 且未按任何其他键时才会触发 <button @click.shift.exact="inner">A</button></p>
         <p>仅当没有按下任何系统按键时触发 <button @click.exact="inner">A</button></p>
+      </div>
+    </section>
+
+    <!-- 表单输入绑定 -->
+    <section class="mx-auto w-full">
+      <div class="bg-white rounded-lg shadow p-4">
+        <div class="font-semibold text-xl mb-1">表单输入绑定</div>
+
+        <p>我们常常需要将表单输入框的内容同步给 JavaScript 中的相应变量。</p>
+
+        <!-- 手动连接值绑定和更改事件监听器 -->
+        <div class="font-semibold text-base mb-1">1、手动连接值绑定和更改事件监听器</div>
+        <input :value="text" @input="(event) => (text = event.target.value)" />
+        输入的内容：{{ text }}
+
+        <!-- v-model 双向数据绑定 -->
+        <div class="font-semibold text-base mb-1">2、v-model</div>
+        <input v-model="text2" />
+        输入的内容（v-model双向数据绑定）：{{ text2 }}
+
+        <!-- 基本用法（文本） -->
+        <div class="font-semibold text-base mb-1">3、基本用法（文本）</div>
+        <p>Message is: {{ message }}</p>
+        <input v-model="message" placeholder="edit me" />
+
+        <!-- 基本用法（多行文本） -->
+        <div class="font-semibold text-base mb-1">4、基本用法（多行文本）</div>
+        <span>Multiline message is:</span>
+        <p style="white-space: pre-line">{{ message2 }}</p>
+        <textarea v-model="message2" placeholder="add multiple lines"></textarea>
+
+        <!-- 基本用法（复选框） -->
+        <div class="font-semibold text-base mb-1">5、基本用法（复选框）</div>
+        <p>checked 只会为 true 或 false</p>
+        <input type="checkbox" id="checkbox" v-model="checked" />
+        <label for="checkbox">{{ checked }}</label>
+
+        <!-- 基本用法（多个复选框） -->
+        <div class="font-semibold text-base mb-1">6、基本用法（多个复选框）</div>
+
+        <div>Checked names: {{ checkNames }}</div>
+        <input type="checkbox" class="mr-2" id="zhangsan" value="zhangsan" v-model="checkNames" />
+        <label for="zhangsan" class="mr-2">zhangsan</label>
+        <input type="checkbox" class="mr-2" id="lisi" value="lisi" v-model="checkNames" />
+        <label for="lisi" class="mr-2">lisi</label>
+        <input type="checkbox" class="mr-2" id="wangwu" value="wangwu" v-model="checkNames" />
+        <label for="wangwu" class="mr-2">zhangsan</label>
+
+        <!-- 基本用法（单选按钮） -->
+        <div class="font-semibold text-base mb-1">7、基本用法（单选按钮）</div>
+
+        <p>picked 在被选择时是字符串 one 或 two</p>
+        <div>picked: {{ picked }}</div>
+        <input type="radio" class="mr-2" id="one" value="one" v-model="picked" />
+        <label for="one" class="mr-2">One</label>
+        <input type="radio" class="mr-2" id="two" value="two" v-model="picked" />
+        <label for="two" class="mr-2">Two</label>
+
+        <!-- 基本用法（选择器） -->
+        <div class="font-semibold text-base mb-1">8、基本用法（选择器）</div>
+        <p>selected 在第一项被选中时为字符串 "A"</p>
+        <div>Selected: {{ selected }}</div>
+        <select v-model="selected" multiple>
+          <option disabled value="">请选择</option>
+          <option>A</option>
+          <option>B</option>
+          <option>C</option>
+        </select>
+
+        <!-- 基本用法（选择器选项通过v-for渲染） -->
+        <div class="font-semibold text-base mb-1">9、基本用法（选择器选项通过v-for渲染）</div>
+        <select v-model="selected2">
+          <option v-for="option in options" :value="option.value">
+            {{ option.text }}
+          </option>
+        </select>
+        <div>Selected: {{ selected2 }}</div>
+
+        <!-- 修饰符 -->
+        <div class="font-semibold text-base mb-1">10、修饰符</div>
+        <div><input v-model.lazy="msg" /> 添加lazy修饰符，每次change事件后更新数据：{{ msg }}</div>
+        <div><input v-model.number="age" /> 添加.number修饰符，让用户输入自动转为数字：{{ age }}</div>
+        <div><input v-model.trim="msg2" /> 添加.trim修饰符，自动去除用户输入内容中两端的空格：{{ msg2 }}</div>
       </div>
     </section>
   </div>
