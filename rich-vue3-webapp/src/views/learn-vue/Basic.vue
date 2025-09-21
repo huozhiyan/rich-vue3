@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, nextTick, computed } from "vue"
+import { ref, reactive, nextTick, computed, watch, watchEffect } from "vue"
 
 const rawHtml = `<span style="color: red; font-weight: bold;">This is raw HTML content!</span>`
 const picPath = "../../../public/favicon.ico"
@@ -107,7 +107,7 @@ let message2 = ref("")
 let checked = ref(false)
 let picked = ref("")
 let checkNames = ref([])
-let selected = ref("")
+let selected = ref([])
 const selected2 = ref("A")
 const options = ref([
   { text: "One", value: "A" },
@@ -117,6 +117,165 @@ const options = ref([
 const msg = ref("")
 const age = ref("")
 const msg2 = ref("")
+
+const question = ref("")
+const answer = ref("Questions usually contain a question mark. ;-)")
+const loading = ref(false)
+
+watch(question, async (newQuestion, oldQuestion) => {
+  if (newQuestion.includes("?")) {
+    loading.value = true
+    answer.value = "Thinking..."
+    try {
+      const res = await fetch("https://yesno.wtf/api")
+      answer.value = (await res.json()).answer
+    } catch (error) {
+      answer.value = "Error! Could not reach the API. " + error
+    } finally {
+      loading.value = false
+    }
+  }
+})
+
+const x = ref(0)
+const y = ref(0)
+
+// 单个ref
+watch(x, (newX, oldX) => {
+  console.log(`newX is ${newX}, oldX is ${oldX}`)
+})
+
+// getter 函数
+watch(
+  () => x.value + y.value,
+  (sum) => {
+    console.log(`sum of x + y is : ${sum}`)
+  }
+)
+
+// 多个来源组成的数组
+watch([x, () => y.value], ([newX, newY]) => {
+  console.log(`x is ${newX} and y is ${newY}`)
+})
+
+const obj2 = reactive({ count: 0 })
+
+// 错误，因为 watch() 得到的参数是一个 number
+// watch(obj.count, (count) => {
+//   console.log(`Count is: ${count}`)
+// })
+
+// 需要用一个返回该属性的 gettr 函数
+watch(
+  () => obj.count,
+  (count) => {
+    console.log(`Count is: ${count}`)
+  }
+)
+
+const person = reactive({ name: "zhangsan", age: 18 })
+watch(person, (newValue, oldValue) => {
+  console.log("--newValue 和 oldValue 是相等的，因为它们是同一个对象！--")
+  console.log("newValue", newValue)
+  console.log("oldValue", oldValue)
+})
+
+const changePerson = () => {
+  person.name = "lisi"
+  person.age = 20
+}
+
+const changePersonName = () => {
+  person.name = "wangwu"
+}
+
+const changePersonAge = () => {
+  person.age++
+}
+
+// 仅当 person.name 被替换时触发
+watch(
+  () => person.name,
+  (newName, oldName) => {
+    console.log(`new name is ${newName}, old name is ${oldName}`)
+  }
+)
+
+const obj3 = reactive({ obj: { info1: "day day up", info2: "go go go" } })
+
+// 显式加上deep选项，强制转成深层侦听器，不然仅info1或info2发生改变时，监听不到
+watch(
+  () => obj3.obj,
+  (newValue, oldValue) => {
+    console.log("obj3", newValue, oldValue)
+  },
+  { deep: true }
+)
+
+// 此时，deep: true 才能监听到
+obj3.obj.info1 = "nihao"
+
+// obj被整个替换了，此时 newValue 和 oldValue 是不想等的，且不手动添加 deep: true 一样能监听到
+// obj3.obj = { info: "你好" }
+
+const source = ref("")
+// 立即执行
+watch(
+  source,
+  (newValue, oldValue) => {
+    console.log("immediate 立即执行，当 source 改变时再次执行。")
+  },
+  { immediate: true }
+)
+
+// 一次性侦听器
+const source2 = ref(0)
+watch(
+  source2,
+  (newValue, oldValue) => {
+    console.log(`当source2变化时，仅执行一次。newValue - ${newValue}，oldValue - ${oldValue}`)
+  },
+  { once: true }
+)
+
+const changeSource2 = () => {
+  source2.value += 1
+}
+
+const draftContent = ref("")
+const lastSavedTime = ref(null)
+
+// 自动保存草稿
+watchEffect((onCleanup) => {
+  if (draftContent.value) {
+    console.log("内容变化，准备自动保存...")
+
+    // 防抖：只在用户停止输入500ms后保存
+    const timer = setTimeout(() => {
+      // 模拟保存到localStorage或API
+      localStorage.setItem("draft", draftContent.value)
+      lastSavedTime.value = new Date().toLocaleTimeString()
+      console.log("草稿已保存:", draftContent.value)
+    }, 500)
+
+    // 副作用清理函数：在下次effect执行前或组件卸载时清除定时器
+    onCleanup(() => {
+      clearTimeout(timer)
+    })
+  }
+})
+
+// 会自动停止
+watchEffect(() => {})
+
+// 不会自动停止
+setTimeout(() => {
+  watchEffect(() => {})
+}, 100)
+
+// 当侦听器不再需要时，手动停止它
+const unwatch = watchEffect(() => {})
+unwatch()
 </script>
 
 <template>
@@ -510,6 +669,105 @@ const msg2 = ref("")
         <div><input v-model.lazy="msg" /> 添加lazy修饰符，每次change事件后更新数据：{{ msg }}</div>
         <div><input v-model.number="age" /> 添加.number修饰符，让用户输入自动转为数字：{{ age }}</div>
         <div><input v-model.trim="msg2" /> 添加.trim修饰符，自动去除用户输入内容中两端的空格：{{ msg2 }}</div>
+      </div>
+    </section>
+
+    <!-- 侦听器 -->
+    <section class="mx-auto w-full">
+      <div class="bg-white rounded-lg shadow p-4">
+        <div class="font-semibold text-xl mb-1">侦听器</div>
+        <p>
+          计算属性允许我们声明性地计算衍生值。然而在有些情况下，我们需要在状态变化时执行一些“副作用”：例如修改DOM，或者根据异步操作的结果去修改另一处的状态。
+        </p>
+        <p>在组合式 API 中，我们可以使用 watch 函数在每次响应式状态发生变化时触发回调函数</p>
+
+        <!-- 侦听器 -->
+        <div class="font-semibold text-base mb-1">1、侦听器</div>
+        <p>
+          Ask a yes/no question:
+          <input v-model="question" :disabled="loading" />
+        </p>
+        <p>{{ answer }}</p>
+
+        <!-- 侦听数据源类型 -->
+        <div class="font-semibold text-base mb-1">2、侦听数据源类型</div>
+        watch 的第一个参数可以是不同形式的“数据源”：它可以是一个 ref (包括计算属性)、一个响应式对象、一个 getter
+        函数、或多个数据源组成的数组：
+        <div>
+          <input type="number" v-model="x" />
+          打开控制台，查看值的变化。
+        </div>
+
+        <!-- 深层侦听器 -->
+        <div class="font-semibold text-base mb-1">3、深度侦听器</div>
+        <p>直接给 watch() 传入一个响应式对象，会隐式地创建一个深层侦听器——该回调函数在所有嵌套的变更时都会被触发</p>
+        <div>
+          {{ person }}
+          <button @click="changePerson">changePerson</button>
+        </div>
+        <div>
+          <p>一个返回响应式对象的getter函数，只有在返回不同的对象时，才会触发回调</p>
+          {{ person }}
+          <button @click="changePersonName">changeName</button>
+          <button @click="changePersonAge" class="ml-2">changeAge</button>
+        </div>
+        <p>在 Vue 3.5+ 中，deep 选项还可以是一个数字，表示最大遍历深度——即 Vue 应该遍历对象嵌套属性的级数。</p>
+
+        <!-- 即时回调的侦听器 -->
+        <div class="font-semibold text-base mb-1">4、即时回调的侦听器</div>
+        <p>
+          watch
+          默认是懒执行的：仅当数据源变化时，才会执行回调。但在某些场景中，我们希望在创建侦听器时，立即执行一遍回调。举例来说，我们想请求一些初始数据，然后在相关状态更改时重新请求数据。
+        </p>
+        <p>我们可以通过传入 immediate: true 选项来强制侦听器的回调立即执行。</p>
+
+        <!-- 一次性侦听 -->
+        <div class="font-semibold text-base mb-1">5、一次性侦听</div>
+        <button @click="changeSource2">一次性侦听器</button> => 查看控制台
+
+        <!-- watchEffect -->
+        <div class="font-semibold text-base mb-1">6、watchEffect</div>
+        <div>
+          watch的核心特点：立即执行传入的函数，并在执行过程中自动追踪其所有的响应式依赖，当任何依赖发生变化时，该函数会再次执行。
+          <ul>
+            <li>自动依赖收集：你不需要显式声明要监听什么，Vue 会自动帮你搞定。</li>
+            <li>立即执行：默认会立即运行一次。</li>
+            <li>简洁：对于这种"副作用依赖于多个状态"的场景，代码比多个 watch 更简洁。</li>
+          </ul>
+        </div>
+        <p>
+          在这个例子中，回调会立即执行，不需要指定 immediate:
+          true。在执行期间，它会自动追踪draftContent.value作为依赖(和计算属性类似)。每当 draftContent.value
+          发生变化时，回调会再次执行。
+        </p>
+        <p>
+          Tip: watchEffect 仅会在其同步执行期间，才追踪依赖。在使用异步回调时，只有在第一个 await
+          正常工作前访问到的属性才会被追踪 。
+        </p>
+        <textarea v-model="draftContent" placeholder="开始写作..."></textarea>
+        <p v-if="lastSavedTime">最后保存时间: {{ lastSavedTime }}</p>
+
+        <!-- 副作用清理 -->
+        <div class="font-semibold text-base mb-1">7、副作用清理</div>
+        <p>我们API来注册一个清理函数，当侦听器失效并准备重新运行时会被调用。</p>
+        <p>
+          onWatcherCleanup仅在Vue3.5+中支持，并且在 watchEffect 效果函数或 watch
+          回调函数的同步执行期间调用：不能在异步函数的 await 语句之后调用它
+        </p>
+        <p>
+          作为替代，onCleanup函数还作为第三个参数传递给侦听器回调，以及watchEffect作用函数的第一个参数，在3.5之前的版本有效。此外，函数参数传递的
+          onCleanup 与侦听器实例相绑定，因此不受 onWatcherCleanup 的同步限制。
+        </p>
+
+        <!-- 停止侦听器 -->
+        <div class="font-semibold text-base mb-1">8、停止侦听器</div>
+        <p>
+          在 setup()
+          中用同步语句创建的侦听器，会自动绑定到宿主组件实例上，并且会在宿主组件卸载时自动停止。因此，在大多数情况下，你无需关心怎么停止一个侦听器。
+        </p>
+        <p>
+          一个关键点是，侦听器必须用同步语句创建：如果用异步回调创建一个侦听器，那么它不会绑定到当前组件上，你必须手动停止它，以防内存泄漏。
+        </p>
       </div>
     </section>
   </div>
