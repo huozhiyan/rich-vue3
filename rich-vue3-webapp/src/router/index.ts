@@ -152,28 +152,28 @@ export const constantRoutes: RouteRecordRaw[] = [
   },
   // 100个小知识
   {
-    path: "/small-knowledge",
+    path: "/small-demo",
     component: Layouts,
-    redirect: "/small-knowledge/knowledge",
-    name: "small-knowledge",
+    redirect: "/small-demo/demo1",
+    name: "small-demo",
     meta: {
-      title: "100个小知识",
+      title: "100个小Demo",
       elIcon: "chicken"
     },
     children: [
       {
-        path: "knowledge1",
-        component: () => import("@/views/small-knowledge/Item1.vue"),
-        name: "knowledge1",
+        path: "demo1",
+        component: () => import("@/views/small-demo/Item1.vue"),
+        name: "demo1",
         meta: {
-          title: "小知识1",
+          title: "你瞅啥",
           elIcon: "chicken"
         }
       },
       {
-        path: "knowledge2",
-        component: () => import("@/views/small-knowledge/Item2.vue"),
-        name: "knowledge2",
+        path: "demo2",
+        component: () => import("@/views/small-demo/Item2.vue"),
+        name: "demo2",
         meta: {
           title: "小知识2",
           elIcon: "chicken"
