@@ -770,6 +770,22 @@ unwatch()
         </p>
       </div>
     </section>
+
+    <!-- 模版引用 -->
+    <section class="mx-auto w-full">
+      <div class="bg-white rounded-lg shadow p-4">
+        <div class="font-semibold text-xl mb-1">模版引用</div>
+
+        <p>
+          虽然 Vue 的声明性渲染模型为你抽象了大部分对 DOM 的直接操作，但在某些情况下，我们仍然需要直接访问底层 DOM
+          元素。
+        </p>
+
+        <!-- v-if -->
+        <div class="font-semibold text-base mb-1">1、访问模板引用</div>
+        <input ref="my-input" />
+      </div>
+    </section>
   </div>
 </template>
 
