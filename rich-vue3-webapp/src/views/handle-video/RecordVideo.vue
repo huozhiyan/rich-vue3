@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import VideoHeader from "@/views/handle-video/components/VideoHeader.vue"
-import { ref, reactive, onMounted } from "vue"
+import { ref, reactive, onMounted, onUnmounted } from "vue"
 
 // 获取 canvas
-const richCanvas = ref<HTMLCanvasElement>() as HTMLCanvasElement
+const richCanvas = ref<HTMLCanvasElement | null>(null)
 // 动画速度
 const animationSpeed = ref<number>(1)
 // 定时器
@@ -28,14 +28,41 @@ let allChunks = reactive([])
 // 在画布上添加文本
 const addTextOnCanvas = () => {
   const canvas = richCanvas.value
+  if (!canvas) return
   const context = canvas.getContext("2d")
+  if (!context) return
+  // 清空画布（使用 CSS 像素坐标，因为在 resize 时我们会设置 transform）
   context.clearRect(0, 0, canvas.width, canvas.height)
-  // 设置字体和大小
+  // 设置字体和大小（字体单位按 CSS 像素）
   context.font = textFontSize.value + fontType.value
-  // 填充文本颜色 => 果粒登色
+  // 填充文本颜色
   context.fillStyle = textColor.value
-  // 位置文本
-  context.fillText(canvasText.value, leftDistance.value, canvas.height / 2)
+  // 位置文本，注意 canvas.height/2 这里是设备像素已缩放回 CSS 像素空间
+  context.fillText(canvasText.value, leftDistance.value, canvas.height / (window.devicePixelRatio || 1) / 2)
+}
+
+// 调整 canvas 分辨率以适配屏幕并保证绘制清晰
+const resizeCanvas = () => {
+  const canvas = richCanvas.value
+  if (!canvas) return
+  const dpr = window.devicePixelRatio || 1
+  // 获取元素的 CSS 尺寸
+  const rect = canvas.getBoundingClientRect()
+  const cssWidth = Math.max(1, Math.floor(rect.width))
+  const cssHeight = Math.max(1, Math.floor(rect.height))
+  // 将 canvas 的内部像素大小设为 CSS 大小 * dpr
+  canvas.width = Math.floor(cssWidth * dpr)
+  canvas.height = Math.floor(cssHeight * dpr)
+  // 保持元素的样式尺寸为 CSS 大小
+  canvas.style.width = cssWidth + "px"
+  canvas.style.height = cssHeight + "px"
+  const ctx = canvas.getContext("2d")
+  if (ctx) {
+    // 将绘制坐标系缩放回 CSS 像素单位，后续绘制可直接使用 CSS 像素值
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+  }
+  // 重新绘制内容
+  addTextOnCanvas()
 }
 
 // 播放动画
@@ -44,19 +71,21 @@ const playAnimation = () => {
     return
   }
   const canvas = richCanvas.value
+  if (!canvas) return
   const context = canvas.getContext("2d")
-  timer.value = setInterval(() => {
-    // 清空画布（否则字体移动后颜色会遗留在画布上）
+  if (!context) return
+  // 使用 setInterval 保持与原逻辑一致，但注意 width/height 已经按 dpr 处理并用 setTransform 恢复为 CSS 像素
+  timer.value = window.setInterval(() => {
     context.clearRect(0, 0, canvas.width, canvas.height)
-    // 设置字体和大小
     context.font = textFontSize.value + fontType.value
-    // 填充文本颜色 => 果粒登色
     context.fillStyle = textColor.value
-    context.fillText(canvasText.value, leftDistance.value, canvas.height / 2) //绘制文本
-    // 文本移动
+    // canvas.height 目前是物理像素，需要除以 devicePixelRatio 来得到 CSS 像素高度
+    const cssHeight = canvas.height / (window.devicePixelRatio || 1)
+    context.fillText(canvasText.value, leftDistance.value, cssHeight / 2)
     leftDistance.value += animationSpeed.value / 2
-    // 如果文本达到画布边缘，改变方向
-    if (leftDistance.value > canvas.width || leftDistance.value < 5) {
+    // 边界检测使用 CSS 宽度
+    const cssWidth = canvas.width / (window.devicePixelRatio || 1)
+    if (leftDistance.value > cssWidth || leftDistance.value < 5) {
       animationSpeed.value = -animationSpeed.value
     }
   }, 10)
@@ -64,8 +93,10 @@ const playAnimation = () => {
 
 // 暂停动画
 const pauseAnimation = () => {
-  clearInterval(timer.value)
-  timer.value = 0
+  if (timer.value) {
+    window.clearInterval(timer.value)
+    timer.value = 0
+  }
 }
 
 // 获取当前速度
@@ -137,7 +168,16 @@ const generateCanvasPic = () => {
 }
 
 onMounted(() => {
+  // 初始设置 canvas 大小并监听窗口变化
+  resizeCanvas()
+  window.addEventListener("resize", resizeCanvas)
   addTextOnCanvas()
+})
+
+onUnmounted(() => {
+  // 清理定时器与事件监听
+  pauseAnimation()
+  window.removeEventListener("resize", resizeCanvas)
 })
 </script>
 
@@ -171,7 +211,7 @@ onMounted(() => {
 }
 .canvas {
   background: white;
-  width: 1400px;
-  height: 700px;
+  width: 100%;
+  height: 75vh;
 }
 </style>
